@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | ClearPHYSICS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="graphic-shape shape-1"></div>
+    <div class="graphic-shape shape-2"></div>
+
+    <nav>
+        <div class="logo">Clear<span>PHYSICS</span> Admin</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Back to Site</a></li>
+            <li><a href="#" id="admin-signout-link" style="display:none;">Sign Out</a></li>
+            <li><button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode">🌙</button></li>
+        </ul>
+    </nav>
+
+    <!-- Sign-in gate -->
+    <div class="admin-login-gate" id="admin-login-gate">
+        <h2 style="font-family:'Montserrat',sans-serif; margin-bottom:10px;">Admin Sign In</h2>
+        <p style="color:var(--text-muted); margin-bottom:20px;">Sign in with an authorized teacher account.</p>
+        <div class="google-signin-slot" id="admin-google-signin-slot" style="display:flex; justify-content:center;"></div>
+        <div class="modal-status" id="admin-login-status"></div>
+    </div>
+
+    <!-- Dashboard (hidden until signed in as an admin) -->
+    <div class="admin-shell" id="admin-shell" style="display:none;">
+
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" data-tab="payments">💳 Payments</button>
+            <button class="admin-tab-btn" data-tab="courses">📚 Courses</button>
+            <button class="admin-tab-btn" data-tab="months">🗓️ Months</button>
+            <button class="admin-tab-btn" data-tab="content">🎬 Content</button>
+            <button class="admin-tab-btn" data-tab="students">🧑‍🎓 Students</button>
+        </div>
+
+        <!-- Payments -->
+        <section class="admin-panel active" id="panel-payments">
+            <div class="admin-card">
+                <h3>Payment Slips</h3>
+                <div class="admin-form-row">
+                    <select id="payments-filter">
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="">All</option>
+                    </select>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="payments-table">
+                        <thead><tr><th>Student</th><th>Course</th><th>Month</th><th>Slip</th><th>Status</th><th>Submitted</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses -->
+        <section class="admin-panel" id="panel-courses">
+            <div class="admin-card">
+                <h3>Add a Course</h3>
+                <div class="admin-form-row">
+                    <input type="text" id="course-name" placeholder="Course name (e.g. 2027 AL)">
+                    <input type="text" id="course-desc" placeholder="Short description (optional)">
+                    <input type="number" id="course-order" placeholder="Display order (e.g. 1)">
+                </div>
+                <div class="admin-form-row">
+                    <input type="file" id="course-tile-image" accept="image/*">
+                    <button class="btn" id="course-add-btn">Add Course</button>
+                </div>
+                <div class="modal-status" id="course-status"></div>
+            </div>
+            <div class="admin-card">
+                <h3>Existing Courses</h3>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="courses-table">
+                        <thead><tr><th>Name</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Months -->
+        <section class="admin-panel" id="panel-months">
+            <div class="admin-card">
+                <h3>Add a Month</h3>
+                <div class="admin-form-row">
+                    <select id="month-course-select"></select>
+                    <input type="text" id="month-name" placeholder="Month name (e.g. April)">
+                    <input type="number" id="month-price" placeholder="Price (Rs.)">
+                    <input type="number" id="month-order" placeholder="Display order">
+                </div>
+                <div class="admin-form-row">
+                    <input type="text" id="month-desc" placeholder="Short description (optional)">
+                    <button class="btn" id="month-add-btn">Add Month</button>
+                </div>
+                <div class="modal-status" id="month-status"></div>
+            </div>
+            <div class="admin-card">
+                <h3>Existing Months</h3>
+                <div class="admin-form-row">
+                    <select id="months-list-course-select"></select>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="months-table">
+                        <thead><tr><th>Name</th><th>Price</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="admin-panel" id="panel-content">
+            <div class="admin-card">
+                <h3>Add Content</h3>
+                <div class="admin-form-row">
+                    <select id="content-course-select"></select>
+                    <select id="content-month-select"></select>
+                    <select id="content-type-select">
+                        <option value="live">Live Class Link</option>
+                        <option value="recording">Recording Link</option>
+                        <option value="pdf">PDF (upload or link)</option>
+                    </select>
+                </div>
+                <div class="admin-form-row">
+                    <input type="text" id="content-title" placeholder="Title (e.g. Lesson 1 - Units & Measurement)">
+                    <input type="text" id="content-meta" placeholder="Extra info shown on the card (e.g. date, duration) — optional">
+                </div>
+                <div class="admin-form-row">
+                    <input type="text" id="content-url" placeholder="URL (Zoom link / YouTube link / Drive PDF link)">
+                    <input type="file" id="content-pdf-file" accept="application/pdf">
+                </div>
+                <div class="admin-form-row">
+                    <button class="btn" id="content-add-btn">Add Content</button>
+                </div>
+                <p style="font-size:0.8rem; color:var(--text-muted);">For a PDF you can either paste a link, or choose a file to upload — uploading fills the URL field automatically.</p>
+                <div class="modal-status" id="content-status"></div>
+            </div>
+            <div class="admin-card">
+                <h3>Existing Content</h3>
+                <div class="admin-form-row">
+                    <select id="content-list-course-select"></select>
+                    <select id="content-list-month-select"></select>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="content-table">
+                        <thead><tr><th>Type</th><th>Title</th><th>Info</th><th>Link</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Students -->
+        <section class="admin-panel" id="panel-students">
+            <div class="admin-card">
+                <h3>Students</h3>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="students-table">
+                        <thead><tr><th>Name</th><th>Email</th><th>WhatsApp</th><th>School</th><th>Batch</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
