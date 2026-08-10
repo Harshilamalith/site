@@ -1,4 +1,4 @@
-const API_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+const API_URL = "https://script.google.com/macros/s/AKfycbx3M6PqkzB50uSWVRTtYMcyjPxvCTn2Q8ItJEf3unbllNy1riEzgy1_VeBGWZ-G_KMc/exec";
 const GOOGLE_CLIENT_ID = "10419694413-b1qvphvc74os0js4t5ectsrhf076mqtg.apps.googleusercontent.com";
 
 const themeToggle = document.getElementById('theme-toggle');
