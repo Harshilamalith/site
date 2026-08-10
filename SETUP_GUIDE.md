@@ -24,8 +24,10 @@ the Admin Dashboard in your browser — no code.
      If you ever create a new OAuth Client ID in Google Cloud Console,
      update it here too, and in `script.js` / `admin.js`.
 4. Click the **Save** icon (💾).
-5. In the function dropdown at the top (next to the "Debug" button),
-   select **setupSheets**, then click **Run** (▶️).
+5. Narrow the Drive permission this script will ask for (see box below),
+   then run the one-time setup:
+   - In the function dropdown at the top (next to the "Debug" button),
+     select **setupSheets**, then click **Run** (▶️).
    - The first time, Google will ask you to authorize the script —
      click through "Advanced → Go to (project name)" — this is normal
      for scripts you write yourself.
@@ -33,6 +35,26 @@ the Admin Dashboard in your browser — no code.
    `Students`, `Courses`, `Months`, `Content`, `Payments`, `Access`.
    **Do not rename these tabs or their header rows** — the script relies
    on the exact names.
+
+> ### Only grant access to files this app creates (not your whole Drive)
+> By default, Apps Script will ask to see, edit, and delete **all** your
+> Drive files, because of how the permission system works — not because
+> the code needs that much. To narrow it down to just the folders this
+> LMS creates for itself:
+> 1. In the Apps Script editor, click the ⚙️ **Project Settings** icon
+>    on the left sidebar.
+> 2. Check the box **"Show `appsscript.json` manifest file in editor"**.
+> 3. Go back to the **Editor** (the `<>` icon), open `appsscript.json`,
+>    delete everything in it, and paste in the contents of the
+>    `appsscript.json` file provided alongside `Code.gs`.
+> 4. Save. Now when you authorize the script, Google's consent screen
+>    will say **"See, edit, create, and delete only the specific Google
+>    Drive files you use with this app"** — not "all your Drive files".
+> 5. Do this *before* you run `setupSheets` for the first time (step 5
+>    above) — if you already authorized with the broad scope, go to
+>    [myaccount.google.com/permissions](https://myaccount.google.com/permissions),
+>    remove this project's access, then run `setupSheets` again to
+>    re-authorize with the narrower scope.
 
 ## Step 3 — Deploy it as a Web App
 
@@ -85,8 +107,9 @@ Upload `index.html`, `styles.css`, `script.js`, `admin.html`, and
 
 ## Notes on the data (all stored in your Sheet + Drive)
 
-- **Files** (payment slips, PDFs, tile images) are saved into a Drive
-  folder called **"ClearPHYSICS LMS Files"** (with subfolders), shared
+- **Files** (payment slips, PDFs, tile images) are all saved into a
+  single Drive folder called **"ClearPHYSICS LMS Files"** — no
+  subfolders, everything in one place — shared
   as "anyone with the link can view" so students can open them.
 - **"Delete" for courses/months** is a *soft delete* — it hides them
   from students immediately but keeps the underlying data (so nothing
