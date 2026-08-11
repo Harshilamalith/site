@@ -163,7 +163,7 @@ document.getElementById('course-add-btn').addEventListener('click', async () => 
         if (file) {
             const dataUrl = await fileToBase64(file);
             const uploaded = await callApi('adminUploadFile', { adminIdToken, kind: 'tile', fileBase64: dataUrl, fileName: file.name, mimeType: file.type });
-            tileImageUrl = uploaded.url;
+            tileImageUrl = uploaded.imageUrl;
         }
         await callApi('adminAddCourse', {
             adminIdToken,
