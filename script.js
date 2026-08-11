@@ -219,6 +219,39 @@ navContactLink.addEventListener('click', (e) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// =========================================================
+// About Us (video modal)
+// =========================================================
+// Paste your Google Drive video's PREVIEW url here — NOT the normal
+// "share" link. Take the file ID from your share link
+// (https://drive.google.com/file/d/THIS_PART/view) and use:
+// https://drive.google.com/file/d/THIS_PART/preview
+const ABOUT_VIDEO_URL = "1-YhpdKl0irWlWOORmsJHUO-NcrWOgUKI";
+
+const navAboutLink = document.getElementById('nav-about-link');
+const aboutModal = document.getElementById('about-modal');
+const aboutModalCloseBtn = document.getElementById('about-modal-close-btn');
+const aboutVideoIframe = document.getElementById('about-video-iframe');
+
+function openAboutModal() {
+    if (!ABOUT_VIDEO_URL || ABOUT_VIDEO_URL.indexOf('PASTE_YOUR') === 0) {
+        alert('The About Us video link hasn\'t been set up yet.');
+        return;
+    }
+    aboutVideoIframe.src = ABOUT_VIDEO_URL;
+    aboutModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeAboutModal() {
+    aboutModal.classList.remove('active');
+    aboutVideoIframe.src = ''; // stops playback when closed
+    document.body.style.overflow = '';
+}
+navAboutLink.addEventListener('click', (e) => { e.preventDefault(); openAboutModal(); });
+aboutModalCloseBtn.addEventListener('click', closeAboutModal);
+aboutModal.addEventListener('click', (e) => { if (e.target === aboutModal) closeAboutModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && aboutModal.classList.contains('active')) closeAboutModal(); });
+
 navAcademicsLink.addEventListener('click', (e) => {
     e.preventDefault();
     hideModeSections();
