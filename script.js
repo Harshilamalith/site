@@ -226,7 +226,7 @@ navContactLink.addEventListener('click', (e) => {
 // "share" link. Take the file ID from your share link
 // (https://drive.google.com/file/d/THIS_PART/view) and use:
 // https://drive.google.com/file/d/THIS_PART/preview
-const ABOUT_VIDEO_URL = "https://drive.google.com/file/d/1-YhpdK10irW1WOORmsJHUO-NcrWOgUKI/preview";
+const ABOUT_VIDEO_URL = "https://drive.google.com/file/d/1-YhpdKl0irWlWOORmsJHUO-NcrWOgUKI/preview";
 
 const navAboutLink = document.getElementById('nav-about-link');
 const aboutModal = document.getElementById('about-modal');
