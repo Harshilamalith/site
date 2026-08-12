@@ -294,8 +294,10 @@ function courseTileHtml(course) {
         <div class="glass-tile course-tile" data-course-id="${course.id}">
             ${img}
             <div class="tile-content">
+                <div class="tile-tag">A/L Batch</div>
                 <h3>${course.name}</h3>
                 <p>${course.description || 'Sign in to access notes, papers, and class recordings.'}</p>
+                <span class="tile-link">Sign in to access →</span>
             </div>
         </div>
     `;
@@ -526,6 +528,19 @@ function unlockAcademics(profile) {
     const courseName = (coursesCache.find((c) => c.id === profile.courseId) || {}).name || profile.courseId;
     studentStatus.textContent = `Signed in as ${profile.fullName || profile.name} — ${courseName}`;
 
+    // Populate the LMS sidebar + dashboard welcome (presentation only)
+    const avatarEl = document.getElementById('sidebar-avatar');
+    if (avatarEl) avatarEl.src = profile.picture || '';
+    const nameEl = document.getElementById('sidebar-name');
+    if (nameEl) nameEl.textContent = profile.fullName || profile.name;
+    const batchEl = document.getElementById('sidebar-batch');
+    if (batchEl) batchEl.textContent = courseName;
+    const welcomeEl = document.getElementById('lms-welcome-title');
+    if (welcomeEl) welcomeEl.textContent = `Welcome back, ${(profile.fullName || profile.name || '').split(' ')[0]}`;
+    const welcomeSub = document.getElementById('lms-welcome-sub');
+    if (welcomeSub) welcomeSub.textContent = `Batch ${courseName} — here's your study dashboard.`;
+
+    enterLmsDashboard();
     renderMonths(profile.courseId);
 }
 
@@ -573,8 +588,11 @@ async function renderMonths(courseId) {
 
     monthsGrid.innerHTML = monthsCache.map((m) => `
         <a class="academics-card month-card" href="#" data-month-id="${m.id}">
-            <div class="card-title">${m.name}</div>
-            ${m.price ? `<div class="card-meta">Rs. ${m.price}</div>` : ''}
+            <div class="month-card-top">
+                <span class="card-title">${m.name}</span>
+                <span class="month-card-arrow" aria-hidden="true">→</span>
+            </div>
+            ${m.price ? `<span class="card-meta">Rs. ${m.price}</span>` : ''}
             ${m.description ? `<p class="card-desc">${m.description}</p>` : ''}
         </a>
     `).join('');
@@ -585,6 +603,8 @@ async function renderMonths(courseId) {
             openMonth(card.getAttribute('data-month-id'));
         });
     });
+
+    refreshLmsStats();
 }
 
 backToMonthsBtn.addEventListener('click', () => {
@@ -596,6 +616,7 @@ async function openMonth(monthId) {
     activeMonth = monthsCache.find((m) => m.id === monthId);
     if (!activeMonth) return;
 
+    setActiveLmsNav('months');
     monthsGrid.style.display = 'none';
     monthContentView.style.display = 'block';
     monthContentTitle.textContent = activeMonth.name;
@@ -649,32 +670,20 @@ function renderContentGrid(type, items) {
 }
 
 function contentCardHtml(type, item) {
-    if (type === 'live') {
-        return `
-            <a class="content-card content-card--live" href="${item.url}" target="_blank" rel="noopener">
-                <div class="content-card-icon">🎥</div>
-                <div class="card-title">${item.title}</div>
-                ${item.meta ? `<div class="card-meta">${item.meta}</div>` : '<div class="card-meta">Check the scheduled time with your teacher</div>'}
-                <span class="content-card-action">Join Zoom Class</span>
-            </a>
-        `;
-    }
-    if (type === 'recording') {
-        return `
-            <a class="content-card content-card--recording" href="${item.url}" target="_blank" rel="noopener">
-                <div class="content-card-icon">📼</div>
-                <div class="card-title">${item.title}</div>
-                ${item.meta ? `<div class="card-meta">${item.meta}</div>` : ''}
-                <span class="content-card-action">Watch Recording</span>
-            </a>
-        `;
-    }
+    const icons = {
+        live: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><polygon points="22 7 16 12 22 17 22 7"/></svg>',
+        recording: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+        pdf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+    };
+    const badges = { live: 'Live Class', recording: 'Recording', pdf: 'Notes' };
+    const labels = { live: 'Join Live Class', recording: 'Watch Recording', pdf: 'Open PDF' };
     return `
-        <a class="content-card content-card--pdf" href="${item.url}" target="_blank" rel="noopener">
-            <div class="content-card-icon">📄</div>
-            <div class="card-title">${item.title}</div>
-            ${item.meta ? `<div class="card-meta">${item.meta}</div>` : ''}
-            <span class="content-card-action">Download PDF</span>
+        <a class="content-card content-card--${type}" href="${item.url}" target="_blank" rel="noopener">
+            <span class="content-card-icon">${icons[type]}</span>
+            <span class="card-type-badge">${badges[type]}</span>
+            <span class="card-title">${item.title}</span>
+            ${item.meta ? `<span class="card-meta">${item.meta}</span>` : (type === 'live' ? '<span class="card-meta">Check the scheduled time with your teacher</span>' : '')}
+            <span class="content-card-action">${labels[type]}</span>
         </a>
     `;
 }
@@ -893,3 +902,63 @@ window.addEventListener('load', async () => {
         tick();
     }
 })();
+
+// =========================================================
+// LMS dashboard presentation — view switching + stats
+// (wires up the sidebar; does not touch any backend logic)
+// =========================================================
+const lmsDashboardEl = document.getElementById('lms-dashboard');
+const lmsMonthsViewEl = document.getElementById('lms-months-view');
+
+function setActiveLmsNav(name) {
+    document.querySelectorAll('.lms-nav-item').forEach((item) => {
+        item.classList.toggle('active', item.dataset.lmsNav === name);
+    });
+}
+
+function enterLmsDashboard() {
+    if (lmsDashboardEl) lmsDashboardEl.style.display = 'block';
+    if (lmsMonthsViewEl) lmsMonthsViewEl.style.display = 'none';
+    if (monthContentView) monthContentView.style.display = 'none';
+    setActiveLmsNav('dashboard');
+}
+
+function enterLmsMonths() {
+    if (lmsDashboardEl) lmsDashboardEl.style.display = 'none';
+    if (lmsMonthsViewEl) {
+        lmsMonthsViewEl.style.display = 'block';
+        monthsGrid.style.display = 'grid';
+    }
+    if (monthContentView) monthContentView.style.display = 'none';
+    setActiveLmsNav('months');
+}
+
+function refreshLmsStats() {
+    if (!currentProfile) return;
+    const courseName = (coursesCache.find((c) => c.id === currentProfile.courseId) || {}).name || currentProfile.courseId;
+    const stats = { 'stat-months': monthsCache.length, 'stat-batch': courseName, 'stat-stream': currentProfile.stream || '—' };
+    Object.entries(stats).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    });
+}
+
+// Sidebar + quick-card navigation
+document.querySelectorAll('[data-lms-nav]').forEach((item) => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = item.dataset.lmsNav;
+        if (target === 'dashboard') enterLmsDashboard();
+        else if (target === 'months') enterLmsMonths();
+        else {
+            const srcMap = { edit: 'nav-edit-details-link', contact: 'nav-contact-link', signout: 'nav-signout-link' };
+            const el = document.getElementById(srcMap[target]);
+            if (el) el.click();
+        }
+    });
+});
+
+// Returning to Academics always lands on the dashboard overview
+navAcademicsLink.addEventListener('click', () => enterLmsDashboard());
+// Back button returns to the months view
+backToMonthsBtn.addEventListener('click', () => enterLmsMonths());

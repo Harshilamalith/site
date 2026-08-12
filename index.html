@@ -85,7 +85,6 @@
                 Watch Our Story
             </button>
         </div>
-        <div class="student-status" id="student-status" style="display:none;"></div>
 
         <div class="hero-trust marketing-content" data-reveal>
             <div class="trust-item">
@@ -118,6 +117,32 @@
             <span class="topic-tag">A/L Past Papers</span>
         </div>
     </div>
+
+    <!-- How it works -->
+    <section class="how-it-works marketing-content">
+        <div class="section-head" data-reveal>
+            <span class="eyebrow">Simple by Design</span>
+            <h2>How ClearPHYSICS works</h2>
+            <p>From first sign-in to your first class in three simple steps.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card" data-reveal>
+                <span class="step-num">01</span>
+                <h3>Sign in with Google</h3>
+                <p>One tap and you're in. No forms, no passwords — your Google account creates your student profile instantly.</p>
+            </div>
+            <div class="step-card" data-reveal>
+                <span class="step-num">02</span>
+                <h3>Pick your batch &amp; month</h3>
+                <p>Choose your A/L batch, then unlock each month of classes as it runs.</p>
+            </div>
+            <div class="step-card" data-reveal>
+                <span class="step-num">03</span>
+                <h3>Unlock &amp; start learning</h3>
+                <p>Upload a payment slip to unlock the month, then access live classes, recordings, and notes from your dashboard.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Course Mode: pick a batch to sign in for -->
     <section class="course-mode-section" id="course-mode-section" style="display:none;">
@@ -226,45 +251,135 @@
         </div>
     </div>
 
-    <!-- Student Academics Dashboard (hidden until registered) -->
+    <!-- Student LMS Dashboard (hidden until registered) -->
     <section class="academics-section" id="academics-section" style="display:none;">
-        <div class="academics-header">
-            <h2 id="academics-batch-title">My Batch</h2>
-            <p>Notes and class recordings for your A/L batch, added as classes progress.</p>
-        </div>
 
-        <!-- Month picker (shown first) -->
-        <div class="academics-grid" id="months-grid"></div>
+        <div class="lms-shell">
 
-        <!-- Content view for a selected month -->
-        <div id="month-content-view" style="display:none;">
-            <button type="button" class="back-link" id="back-to-months-btn">&larr; Back to months</button>
-            <h3 id="month-content-title" class="month-content-title"></h3>
-
-            <!-- Locked state: payment slip upload -->
-            <div id="month-locked-panel" style="display:none;">
-                <div class="locked-card">
-                    <div class="locked-icon" aria-hidden="true">🔒</div>
-                    <p id="locked-status-text">This month isn't unlocked yet. Upload your payment slip below and your teacher will review it — once accepted, you'll have permanent access.</p>
-                    <form id="slip-upload-form" class="slip-form">
-                        <label for="slip-file-input">Payment Slip (image or PDF)</label>
-                        <input type="file" id="slip-file-input" accept="image/*,.pdf" required>
-                        <button type="submit" class="btn" id="slip-submit-btn" style="width:100%; margin-top:14px;">Upload Payment Slip</button>
-                        <div class="modal-status" id="slip-status"></div>
-                    </form>
+            <!-- Sidebar -->
+            <aside class="lms-sidebar">
+                <div class="lms-profile">
+                    <img id="sidebar-avatar" src="" alt="">
+                    <div class="lms-profile-meta">
+                        <div class="lms-profile-name" id="sidebar-name">Student</div>
+                        <div class="lms-profile-batch" id="sidebar-batch">—</div>
+                    </div>
                 </div>
-            </div>
+                <nav class="lms-nav">
+                    <a href="#" class="lms-nav-item active" data-lms-nav="dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                        Dashboard
+                    </a>
+                    <a href="#" class="lms-nav-item" data-lms-nav="months">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        My Months
+                    </a>
+                    <a href="#" class="lms-nav-item" data-lms-nav="edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+                        Edit Details
+                    </a>
+                    <a href="#" class="lms-nav-item" data-lms-nav="contact">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Contact
+                    </a>
+                    <a href="#" class="lms-nav-item danger" data-lms-nav="signout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Sign Out
+                    </a>
+                </nav>
+                <div class="lms-sidebar-foot">ClearPHYSICS LMS</div>
+            </aside>
 
-            <!-- Unlocked state: content cards -->
-            <div id="month-content-panels" style="display:none;">
-                <div class="academics-subhead"><h3>Live Classes</h3></div>
-                <div class="academics-grid content-grid" id="live-grid"></div>
+            <!-- Main content -->
+            <div class="lms-main">
 
-                <div class="academics-subhead"><h3>Class Recordings</h3></div>
-                <div class="academics-grid content-grid" id="recordings-grid"></div>
+                <!-- Dashboard overview -->
+                <div class="lms-dashboard" id="lms-dashboard">
+                    <div class="lms-welcome">
+                        <div>
+                            <span class="eyebrow">Student Dashboard</span>
+                            <h2 id="lms-welcome-title">Welcome back</h2>
+                            <p id="lms-welcome-sub">Here's what's happening in your batch.</p>
+                            <div class="student-status" id="student-status" style="display:none;"></div>
+                        </div>
+                        <button type="button" class="btn btn-ghost" data-lms-nav="months">
+                            Browse Months
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
 
-                <div class="academics-subhead"><h3>Notes &amp; PDFs</h3></div>
-                <div class="academics-grid content-grid" id="notes-grid"></div>
+                    <div class="lms-stats">
+                        <div class="lms-stat-card">
+                            <span class="lms-stat-value" id="stat-months">—</span>
+                            <span class="lms-stat-label">Months in Batch</span>
+                        </div>
+                        <div class="lms-stat-card">
+                            <span class="lms-stat-value" id="stat-batch">—</span>
+                            <span class="lms-stat-label">Your Batch</span>
+                        </div>
+                        <div class="lms-stat-card">
+                            <span class="lms-stat-value" id="stat-stream">—</span>
+                            <span class="lms-stat-label">A/L Stream</span>
+                        </div>
+                    </div>
+
+                    <div class="lms-quick">
+                        <a href="#" class="lms-quick-card" data-lms-nav="months">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            <div><div class="lms-quick-title">Browse Months</div><div class="lms-quick-sub">See monthly content &amp; prices</div></div>
+                        </a>
+                        <a href="#" class="lms-quick-card" data-lms-nav="edit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <div><div class="lms-quick-title">Update Profile</div><div class="lms-quick-sub">Keep your details up to date</div></div>
+                        </a>
+                        <a href="#" class="lms-quick-card" data-lms-nav="contact">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <div><div class="lms-quick-title">Get Support</div><div class="lms-quick-sub">Call, WhatsApp, Telegram or email</div></div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Months view -->
+                <div class="lms-months-view" id="lms-months-view" style="display:none;">
+                    <div class="academics-header">
+                        <h2 id="academics-batch-title">My Batch</h2>
+                        <p>Notes and class recordings for your A/L batch, added as classes progress.</p>
+                    </div>
+                    <div class="academics-grid" id="months-grid"></div>
+                </div>
+
+                <!-- Content view for a selected month -->
+                <div id="month-content-view" style="display:none;">
+                    <button type="button" class="back-link" id="back-to-months-btn">&larr; Back to months</button>
+                    <h3 id="month-content-title" class="month-content-title"></h3>
+
+                    <!-- Locked state: payment slip upload -->
+                    <div id="month-locked-panel" style="display:none;">
+                        <div class="locked-card">
+                            <div class="locked-icon" aria-hidden="true">🔒</div>
+                            <p id="locked-status-text">This month isn't unlocked yet. Upload your payment slip below and your teacher will review it — once accepted, you'll have permanent access.</p>
+                            <form id="slip-upload-form" class="slip-form">
+                                <label for="slip-file-input">Payment Slip (image or PDF)</label>
+                                <input type="file" id="slip-file-input" accept="image/*,.pdf" required>
+                                <button type="submit" class="btn" id="slip-submit-btn" style="width:100%; margin-top:14px;">Upload Payment Slip</button>
+                                <div class="modal-status" id="slip-status"></div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Unlocked state: content cards -->
+                    <div id="month-content-panels" style="display:none;">
+                        <div class="academics-subhead"><h3>Live Classes</h3></div>
+                        <div class="academics-grid content-grid" id="live-grid"></div>
+
+                        <div class="academics-subhead"><h3>Class Recordings</h3></div>
+                        <div class="academics-grid content-grid" id="recordings-grid"></div>
+
+                        <div class="academics-subhead"><h3>Notes &amp; PDFs</h3></div>
+                        <div class="academics-grid content-grid" id="notes-grid"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -346,14 +461,18 @@
         <div class="tiles-container courses-tiles" id="courses-tiles-grid">
             <div class="glass-tile course-tile" data-batch="2027">
                 <div class="tile-content">
+                    <div class="tile-tag">A/L Batch</div>
                     <h3>2027 Papers</h3>
                     <p>Sign in to access notes, past papers, and class recordings for the 2027 A/L batch.</p>
+                    <span class="tile-link">Sign in to access →</span>
                 </div>
             </div>
             <div class="glass-tile course-tile" data-batch="2028">
                 <div class="tile-content">
+                    <div class="tile-tag">A/L Batch</div>
                     <h3>2028 Papers</h3>
                     <p>Sign in to access notes, past papers, and class recordings for the 2028 A/L batch.</p>
+                    <span class="tile-link">Sign in to access →</span>
                 </div>
             </div>
         </div>

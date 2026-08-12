@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | ClearPHYSICS</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%2334d399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='4' fill='url(%23g)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='6' fill='none' stroke='url(%23g)' stroke-width='2' transform='rotate(30 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='6' fill='none' stroke='url(%23g)' stroke-width='2' transform='rotate(90 16 16)'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -13,21 +15,37 @@
 
     <div class="graphic-shape shape-1"></div>
     <div class="graphic-shape shape-2"></div>
+    <div class="graphic-shape shape-3"></div>
+    <div class="bg-grid"></div>
 
-    <nav>
-        <div class="logo">Clear<span>PHYSICS</span> Admin</div>
+    <nav id="site-nav">
+        <div class="logo">
+            <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+                <defs>
+                    <linearGradient id="logo-g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#22d3ee"/>
+                        <stop offset="1" stop-color="#34d399"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="16" cy="16" r="4" fill="url(#logo-g)"/>
+                <ellipse cx="16" cy="16" rx="13" ry="6" fill="none" stroke="url(#logo-g)" stroke-width="2" transform="rotate(30 16 16)"/>
+                <ellipse cx="16" cy="16" rx="13" ry="6" fill="none" stroke="url(#logo-g)" stroke-width="2" transform="rotate(90 16 16)"/>
+            </svg>
+            <span>Clear<span>PHYSICS</span> <em class="logo-teacher">Admin Panel</em></span>
+        </div>
         <ul class="nav-links">
             <li><a href="index.html">Back to Site</a></li>
             <li><a href="#" id="admin-signout-link" style="display:none;">Sign Out</a></li>
-            <li><button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode">🌙</button></li>
+            <li><button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle dark or light mode">🌙</button></li>
         </ul>
     </nav>
 
     <!-- Sign-in gate -->
     <div class="admin-login-gate" id="admin-login-gate">
-        <h2 style="font-family:'Montserrat',sans-serif; margin-bottom:10px;">Admin Sign In</h2>
-        <p style="color:var(--text-muted); margin-bottom:20px;">Sign in with an authorized teacher account.</p>
-        <div class="google-signin-slot" id="admin-google-signin-slot" style="display:flex; justify-content:center;"></div>
+        <div class="modal-icon" aria-hidden="true">🛡️</div>
+        <h2>Admin Sign In</h2>
+        <p>Sign in with an authorized teacher account.</p>
+        <div class="google-signin-slot" id="admin-google-signin-slot" style="display:flex; justify-content:center; margin-bottom:8px;"></div>
         <div class="modal-status" id="admin-login-status"></div>
     </div>
 
@@ -35,11 +53,26 @@
     <div class="admin-shell" id="admin-shell" style="display:none;">
 
         <div class="admin-tabs">
-            <button class="admin-tab-btn active" data-tab="payments">💳 Payments</button>
-            <button class="admin-tab-btn" data-tab="courses">📚 Courses</button>
-            <button class="admin-tab-btn" data-tab="months">🗓️ Months</button>
-            <button class="admin-tab-btn" data-tab="content">🎬 Content</button>
-            <button class="admin-tab-btn" data-tab="students">🧑‍🎓 Students</button>
+            <button class="admin-tab-btn active" data-tab="payments">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                Payments
+            </button>
+            <button class="admin-tab-btn" data-tab="courses">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Courses
+            </button>
+            <button class="admin-tab-btn" data-tab="months">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Months
+            </button>
+            <button class="admin-tab-btn" data-tab="content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                Content
+            </button>
+            <button class="admin-tab-btn" data-tab="students">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Students
+            </button>
         </div>
 
         <!-- Payments -->
