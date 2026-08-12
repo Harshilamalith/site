@@ -47,16 +47,40 @@ window.addEventListener('resize', updateProgressBar);
 // "simple request" so the browser skips a CORS preflight (which Apps
 // Script web apps can't answer), and Apps Script's response can then
 // be read normally.
-async function callApi(action, payload) {
+//
+// Google's free-tier Web App occasionally returns a slow/garbled
+// response under normal load (a known quirk, not a bug in this code) —
+// so a failed attempt is retried a couple of times with a short pause
+// before actually surfacing an error to the user.
+function wait_(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+
+async function callApi(action, payload, attempt) {
+    attempt = attempt || 1;
     if (!API_URL || API_URL.indexOf('PASTE_YOUR') === 0) {
         throw new Error('The site is not connected to the backend yet (API_URL not set in script.js).');
     }
-    const resp = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action, payload: payload || {} })
-    });
-    const data = await resp.json();
+
+    let resp;
+    try {
+        resp = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, payload: payload || {} })
+        });
+    } catch (networkErr) {
+        if (attempt < 3) { await wait_(500 * attempt); return callApi(action, payload, attempt + 1); }
+        throw new Error('Could not reach the server. Please check your connection and try again.');
+    }
+
+    let data;
+    try {
+        data = await resp.json();
+    } catch (parseErr) {
+        // Response wasn't valid JSON — almost always a transient hiccup.
+        if (attempt < 3) { await wait_(500 * attempt); return callApi(action, payload, attempt + 1); }
+        throw new Error('The server is temporarily busy. Please try again in a moment.');
+    }
+
     if (!data.ok) throw new Error(data.error || 'Something went wrong.');
     return data.data;
 }
@@ -226,7 +250,7 @@ navContactLink.addEventListener('click', (e) => {
 // "share" link. Take the file ID from your share link
 // (https://drive.google.com/file/d/THIS_PART/view) and use:
 // https://drive.google.com/file/d/THIS_PART/preview
-const ABOUT_VIDEO_URL = "https://drive.google.com/file/d/1-YhpdKl0irWlWOORmsJHUO-NcrWOgUKI/preview";
+const ABOUT_VIDEO_URL = "PASTE_YOUR_DRIVE_VIDEO_PREVIEW_URL_HERE";
 
 const navAboutLink = document.getElementById('nav-about-link');
 const aboutModal = document.getElementById('about-modal');
