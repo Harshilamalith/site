@@ -745,3 +745,151 @@ window.addEventListener('load', async () => {
     // click the button again — restores their session with a fresh token.
     google.accounts.id.prompt();
 });
+
+// =========================================================
+// UI polish — mobile nav, particles, scroll reveal, parallax
+// (safe no-ops when elements are absent)
+// =========================================================
+(function () {
+    // Mobile navigation toggle
+    const siteNav = document.getElementById('site-nav');
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinksEl = document.getElementById('nav-links');
+
+    if (navToggle && navLinksEl) {
+        navToggle.addEventListener('click', () => {
+            const open = siteNav.classList.toggle('nav-open');
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        navLinksEl.addEventListener('click', (e) => {
+            if (e.target.closest('a') || e.target.classList.contains('theme-toggle')) {
+                siteNav.classList.remove('nav-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // Nav shadow when scrolled
+    function onScroll() {
+        if (siteNav) siteNav.classList.toggle('scrolled', window.scrollY > 12);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Hero button that opens the About Us video modal
+    document.querySelectorAll('[data-open-about]').forEach((btn) => {
+        btn.addEventListener('click', () => openAboutModal());
+    });
+
+    // Footer quick links forward to the matching nav links
+    document.querySelectorAll('[data-nav]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const src = document.querySelector('[data-nav-src="' + link.dataset.nav + '"]');
+            if (src) src.click();
+        });
+    });
+
+    // Footer year
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // Scroll reveal with a gentle cascade
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    if (revealEls.length && 'IntersectionObserver' in window) {
+        revealEls.forEach((el, i) => {
+            el.style.setProperty('--rd', Math.min(i, 10) * 70 + 'ms');
+            el.classList.add('reveal-init');
+        });
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach((el) => io.observe(el));
+    }
+
+    // Aurora blobs drift with scroll
+    const shape1 = document.querySelector('.shape-1');
+    const shape2 = document.querySelector('.shape-2');
+    function parallax() {
+        if (shape1) shape1.style.top = (-120 + window.scrollY * 0.06) + 'px';
+        if (shape2) shape2.style.bottom = (-140 + window.scrollY * 0.05) + 'px';
+    }
+    window.addEventListener('scroll', parallax, { passive: true });
+
+    // Constellation particle field
+    const canvas = document.getElementById('bg-canvas');
+    if (canvas && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        let w, h, frame = 0;
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const COUNT = Math.min(60, Math.max(24, Math.floor(w / 26)));
+        let color = 'rgba(125, 211, 252, 0.55)';
+
+        function readColor() {
+            const v = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
+            if (v) color = v;
+        }
+        readColor();
+
+        function rand(a, b) { return a + Math.random() * (b - a); }
+        for (let i = 0; i < COUNT; i++) {
+            particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                vx: rand(-0.25, 0.25),
+                vy: rand(-0.25, 0.25),
+                r: rand(0.8, 2.2)
+            });
+        }
+
+        const LINK_DIST = 130;
+        function tick() {
+            if (frame % 120 === 0) readColor();
+            frame++;
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > w) p.vx *= -1;
+                if (p.y < 0 || p.y > h) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.globalAlpha = 0.6;
+                ctx.fill();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q = particles[j];
+                    const dx = p.x - q.x;
+                    const dy = p.y - q.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < LINK_DIST) {
+                        ctx.globalAlpha = (1 - dist / LINK_DIST) * 0.22;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = color;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(tick);
+        }
+        tick();
+    }
+})();

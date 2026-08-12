@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Tuition | Master the Universe</title>
-    <!-- Professional Fonts: Montserrat & Inter -->
+    <meta name="description" content="ClearPHYSICS — professional A/L Physics tuition by PHM Pathirana. Notes, past papers, live classes and recordings for the 2027 & 2028 A/L batches.">
+    <title>ClearPHYSICS | Master the Universe — A/L Physics Tuition</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%2334d399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='4' fill='url(%23g)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='6' fill='none' stroke='url(%23g)' stroke-width='2' transform='rotate(30 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='6' fill='none' stroke='url(%23g)' stroke-width='2' transform='rotate(90 16 16)'/%3E%3C/svg%3E">
+    <!-- Professional Fonts: Sora (display) & Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     <!-- Google Identity Services (Sign in with Google) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <!-- External Stylesheet -->
@@ -19,35 +22,102 @@
         <div class="progress-bar-fill" id="progress-bar-fill"></div>
     </div>
 
-    <!-- Ambient Background Graphics -->
-    <div class="graphic-shape shape-1"></div>
-    <div class="graphic-shape shape-2"></div>
+    <!-- Ambient Background: aurora blobs, faint grid, particle canvas -->
+    <div class="graphic-shape shape-1" aria-hidden="true"></div>
+    <div class="graphic-shape shape-2" aria-hidden="true"></div>
+    <div class="graphic-shape shape-3" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
     <!-- Navigation -->
-    <nav>
-        <div class="logo">Clear<span>PHYSICS</span> PHM Pathirana</div>
-        <ul class="nav-links">
-            <li><a href="#" class="marketing-link" id="nav-home-link">Home</a></li>
-            <li><a href="#" class="marketing-link" id="nav-courses-link">Courses</a></li>
-            <li><a href="#" id="nav-contact-link">Contact Us</a></li>
-            <li><a href="#" class="marketing-link" id="nav-about-link">About Us</a></li>
+    <nav id="site-nav">
+        <div class="logo">
+            <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+                <defs>
+                    <linearGradient id="logo-g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#22d3ee"/>
+                        <stop offset="1" stop-color="#34d399"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="16" cy="16" r="4" fill="url(#logo-g)"/>
+                <ellipse cx="16" cy="16" rx="13" ry="6" fill="none" stroke="url(#logo-g)" stroke-width="2" transform="rotate(30 16 16)"/>
+                <ellipse cx="16" cy="16" rx="13" ry="6" fill="none" stroke="url(#logo-g)" stroke-width="2" transform="rotate(90 16 16)"/>
+            </svg>
+            <span>Clear<span>PHYSICS</span> <em class="logo-teacher">PHM Pathirana</em></span>
+        </div>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#" class="marketing-link" id="nav-home-link" data-nav-src="home">Home</a></li>
+            <li><a href="#" class="marketing-link" id="nav-courses-link" data-nav-src="courses">Courses</a></li>
+            <li><a href="#" id="nav-contact-link" data-nav-src="contact">Contact Us</a></li>
+            <li><a href="#" class="marketing-link" id="nav-about-link" data-nav-src="about">About Us</a></li>
             <li><a href="#" id="nav-edit-details-link" style="display:none;">Edit My Details</a></li>
             <li><a href="#academics-section" id="nav-academics-link" style="display:none;">My Academics</a></li>
             <li><a href="#" id="nav-signout-link" style="display:none;">Sign Out</a></li>
             <li>
-                <!-- Dark/Light Mode Toggle -->
-                <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle dark or light mode">🌙</button>
             </li>
         </ul>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-orbit" aria-hidden="true">
+            <span class="orbit-ring ring-1"></span>
+            <span class="orbit-ring ring-2"></span>
+            <span class="orbit-dot dot-1"></span>
+            <span class="orbit-dot dot-2"></span>
+        </div>
+        <div class="float-chip chip-1" aria-hidden="true">E = mc²</div>
+        <div class="float-chip chip-2" aria-hidden="true">F = ma</div>
+        <div class="float-chip chip-3" aria-hidden="true">λ</div>
+        <div class="float-chip chip-4" aria-hidden="true">∫ F · dt = Δp</div>
+
+        <div class="hero-eyebrow">A/L Physics Tuition · by PHM Pathirana</div>
         <h1>Master the Laws of the Universe</h1>
-        <p>Unlock your potential with modern physics concepts. From Simple mechanics to <span>Advanced theory</span>, we make complex concepts clear, engaging, and easy to understand. Start your A/L journey with us !</p>
-        <button type="button" class="btn" id="book-session-btn">Log In Now</button>
+        <p>Unlock your potential with modern physics concepts. From simple mechanics to <span>advanced theory</span>, we make complex concepts clear, engaging, and easy to understand. Start your A/L journey with us!</p>
+        <div class="hero-ctas">
+            <button type="button" class="btn" id="book-session-btn">Log In Now</button>
+            <button type="button" class="btn btn-ghost" data-open-about>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                Watch Our Story
+            </button>
+        </div>
         <div class="student-status" id="student-status" style="display:none;"></div>
+
+        <div class="hero-trust marketing-content" data-reveal>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>2027 &amp; 2028 Batches</span>
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Notes &amp; Past Papers</span>
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                <span>Class Recordings</span>
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>WhatsApp Support</span>
+            </div>
+        </div>
     </section>
+
+    <!-- Topic tags -->
+    <div class="topic-strip marketing-content" data-reveal>
+        <div class="topic-tags">
+            <span class="topic-tag">Mechanics</span>
+            <span class="topic-tag">Waves &amp; Oscillations</span>
+            <span class="topic-tag">Thermodynamics</span>
+            <span class="topic-tag">Electromagnetism</span>
+            <span class="topic-tag">Modern Physics</span>
+            <span class="topic-tag">A/L Past Papers</span>
+        </div>
+    </div>
 
     <!-- Course Mode: pick a batch to sign in for -->
     <section class="course-mode-section" id="course-mode-section" style="display:none;">
@@ -57,12 +127,16 @@
         </div>
         <div class="course-tiles-grid" id="course-tiles-grid">
             <div class="course-select-tile" data-batch="2027">
+                <div class="tile-icon" aria-hidden="true">📘</div>
                 <h3>2027 Papers</h3>
                 <p>For students sitting the 2027 A/L examination.</p>
+                <span class="tile-cta">Sign in to access →</span>
             </div>
             <div class="course-select-tile" data-batch="2028">
+                <div class="tile-icon" aria-hidden="true">📙</div>
                 <h3>2028 Papers</h3>
                 <p>For students sitting the 2028 A/L examination.</p>
+                <span class="tile-cta">Sign in to access →</span>
             </div>
         </div>
     </section>
@@ -73,6 +147,7 @@
             <button class="modal-close" id="modal-close-btn" title="Close">&times;</button>
 
             <div id="modal-pre-login">
+                <div class="modal-icon" aria-hidden="true">🔬</div>
                 <h2>Sign in to Book</h2>
                 <p>Sign in with Google to schedule your physics session. We'll use your account to confirm your booking details.</p>
                 <div class="google-signin-slot" id="google-signin-slot"></div>
@@ -125,14 +200,15 @@
                         <option value="2028">2028 A/L Batch</option>
                     </select>
 
-                    <button type="submit" class="btn" id="reg-submit-btn" style="width:100%; margin-top:10px;">Save & Unlock My Batch</button>
+                    <button type="submit" class="btn" id="reg-submit-btn" style="width:100%; margin-top:10px;">Save &amp; Unlock My Batch</button>
                     <button type="button" class="btn btn-danger" id="reg-clear-all-btn" style="width:100%; margin-top:10px; display:none;">Clear All My Data</button>
                     <div class="modal-status" id="reg-status"></div>
                 </form>
             </div>
 
             <div id="modal-done" style="display:none;">
-                <h2>You're All Set 🎉</h2>
+                <div class="modal-icon success" aria-hidden="true">✓</div>
+                <h2>You're All Set</h2>
                 <p id="modal-done-text">Your profile is saved. Head to your batch dashboard to access notes and recordings.</p>
                 <a href="#academics-section" class="btn" id="proceed-academics-btn" style="width:100%; text-align:center;">Go to My Academics</a>
             </div>
@@ -168,6 +244,7 @@
             <!-- Locked state: payment slip upload -->
             <div id="month-locked-panel" style="display:none;">
                 <div class="locked-card">
+                    <div class="locked-icon" aria-hidden="true">🔒</div>
                     <p id="locked-status-text">This month isn't unlocked yet. Upload your payment slip below and your teacher will review it — once accepted, you'll have permanent access.</p>
                     <form id="slip-upload-form" class="slip-form">
                         <label for="slip-file-input">Payment Slip (image or PDF)</label>
@@ -180,13 +257,13 @@
 
             <!-- Unlocked state: content cards -->
             <div id="month-content-panels" style="display:none;">
-                <div class="academics-subhead"><h3>🎥 Live Classes</h3></div>
+                <div class="academics-subhead"><h3>Live Classes</h3></div>
                 <div class="academics-grid content-grid" id="live-grid"></div>
 
-                <div class="academics-subhead"><h3>📼 Class Recordings</h3></div>
+                <div class="academics-subhead"><h3>Class Recordings</h3></div>
                 <div class="academics-grid content-grid" id="recordings-grid"></div>
 
-                <div class="academics-subhead"><h3>📄 Notes & PDFs</h3></div>
+                <div class="academics-subhead"><h3>Notes &amp; PDFs</h3></div>
                 <div class="academics-grid content-grid" id="notes-grid"></div>
             </div>
         </div>
@@ -282,42 +359,92 @@
         </div>
     </section>
 
-    <!-- Glass Tiles with Physics Images -->
-    <section class="tiles-container">
-        
-        <!-- Tile 1 -->
-        <div class="glass-tile">
-            <div class="tile-image">
-                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&auto=format&fit=crop" alt="Physics Formulas and Chalkboard">
-            </div>
-            <div class="tile-content">
-                <h3>Core Concepts</h3>
-                <p>Build a rock-solid foundation in mechanics, thermodynamics, and electromagnetism. We break down difficult equations into logical, easy-to-follow steps.</p>
-            </div>
+    <!-- Marketing tiles -->
+    <div class="marketing-content">
+        <div class="section-head" data-reveal>
+            <span class="eyebrow">The ClearPHYSICS Method</span>
+            <h2>Physics, made genuinely simple</h2>
+            <p>From first principles to exam-day confidence — a clear, structured path from mechanics to modern physics.</p>
         </div>
 
-        <!-- Tile 2 -->
-        <div class="glass-tile">
-            <div class="tile-image">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=600&auto=format&fit=crop" alt="Science Experiment Equipment">
+        <!-- Glass Tiles with Physics Images -->
+        <section class="tiles-container">
+            <!-- Tile 1 -->
+            <div class="glass-tile" data-reveal>
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&auto=format&fit=crop" alt="Physics Formulas and Chalkboard">
+                </div>
+                <div class="tile-content">
+                    <div class="tile-tag">Foundation</div>
+                    <h3>Core Concepts</h3>
+                    <p>Build a rock-solid foundation in mechanics, thermodynamics, and electromagnetism. We break down difficult equations into logical, easy-to-follow steps.</p>
+                    <span class="tile-link">Explore the syllabus →</span>
+                </div>
             </div>
-            <div class="tile-content">
-                <h3>Exam Preparation</h3>
-                <p>Targeted preparation for GCSE, A-Levels, and AP Physics. Practice with past papers and learn exam techniques to maximize your grades.</p>
-            </div>
-        </div>
 
-        <!-- Tile 3 -->
-        <div class="glass-tile">
-            <div class="tile-image">
-                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=600&auto=format&fit=crop" alt="Student Studying">
+            <!-- Tile 2 -->
+            <div class="glass-tile" data-reveal>
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=600&auto=format&fit=crop" alt="Science Experiment Equipment">
+                </div>
+                <div class="tile-content">
+                    <div class="tile-tag">Exams</div>
+                    <h3>Exam Preparation</h3>
+                    <p>Targeted preparation for GCSE, A-Levels, and AP Physics. Practice with past papers and learn exam techniques to maximize your grades.</p>
+                    <span class="tile-link">See past papers →</span>
+                </div>
             </div>
-            <div class="tile-content">
-                <h3>1-on-1 Mentoring</h3>
-                <p>Personalized tutoring tailored to your learning style. Whether you struggle with math skills or want to master astrophysics, we've got you covered.</p>
+
+            <!-- Tile 3 -->
+            <div class="glass-tile" data-reveal>
+                <div class="tile-image">
+                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=600&auto=format&fit=crop" alt="Student Studying">
+                </div>
+                <div class="tile-content">
+                    <div class="tile-tag">Mentoring</div>
+                    <h3>1-on-1 Mentoring</h3>
+                    <p>Personalized tutoring tailored to your learning style. Whether you struggle with math skills or want to master astrophysics, we've got you covered.</p>
+                    <span class="tile-link">Book a session →</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand" data-reveal>
+                <div class="logo">
+                    <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+                        <circle cx="16" cy="16" r="4" fill="url(#logo-g)"/>
+                        <ellipse cx="16" cy="16" rx="13" ry="6" fill="none" stroke="url(#logo-g)" stroke-width="2" transform="rotate(30 16 16)"/>
+                        <ellipse cx="16" cy="16" rx="13" ry="6" fill="none" stroke="url(#logo-g)" stroke-width="2" transform="rotate(90 16 16)"/>
+                    </svg>
+                    <span>Clear<span>PHYSICS</span></span>
+                </div>
+                <p>Professional A/L Physics tuition that turns complex concepts into clear, confident understanding.</p>
+            </div>
+
+            <div class="footer-col" data-reveal>
+                <h4>Explore</h4>
+                <a href="#" data-nav="home">Home</a>
+                <a href="#" data-nav="courses">Courses</a>
+                <a href="#" data-nav="about">About Us</a>
+                <a href="#" data-nav="contact">Contact Us</a>
+            </div>
+
+            <div class="footer-col" data-reveal>
+                <h4>Get in Touch</h4>
+                <a href="tel:+94777777777">077 777 7777</a>
+                <a href="https://wa.me/94777777777" target="_blank" rel="noopener">WhatsApp</a>
+                <a href="https://t.me/+94777777777" target="_blank" rel="noopener">Telegram</a>
+                <a href="mailto:mymail@gmail.com">mymail@gmail.com</a>
             </div>
         </div>
-    </section>
+        <div class="footer-bottom">
+            <p>© <span id="year">2026</span> ClearPHYSICS · PHM Pathirana. All rights reserved.</p>
+        </div>
+    </footer>
 
     <!-- External JavaScript -->
     <script src="script.js"></script>
