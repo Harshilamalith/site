@@ -145,6 +145,8 @@ function escapeHtml(s) {
 // =========================================================
 async function loadCoursesEverywhere() {
     coursesCache = await callApi('adminListCourses', { adminIdToken });
+    const statEl = document.getElementById('admin-stat-courses');
+    if (statEl) statEl.textContent = coursesCache.filter((c) => c.active !== false).length;
     const selects = ['month-course-select', 'months-list-course-select', 'content-course-select', 'content-list-course-select'];
     selects.forEach((id) => {
         const el = document.getElementById(id);
@@ -346,6 +348,11 @@ async function loadPayments() {
     const payments = await callApi('adminListPayments', { adminIdToken, status });
     const courseName = (id) => (coursesCache.find((c) => c.id === id) || {}).name || id;
 
+    const statPending = document.getElementById('admin-stat-pending');
+    const statPayments = document.getElementById('admin-stat-payments');
+    if (statPayments) statPayments.textContent = payments.length;
+    if (statPending) statPending.textContent = payments.filter((p) => p.status === 'pending').length;
+
     const tbody = document.querySelector('#payments-table tbody');
     tbody.innerHTML = payments.map((p) => `
         <tr>
@@ -389,6 +396,9 @@ async function loadPayments() {
 async function loadStudents() {
     const students = await callApi('adminListStudents', { adminIdToken });
     const courseName = (id) => (coursesCache.find((c) => c.id === id) || {}).name || id;
+
+    const statStudents = document.getElementById('admin-stat-students');
+    if (statStudents) statStudents.textContent = students.length;
 
     const tbody = document.querySelector('#students-table tbody');
     tbody.innerHTML = students.map((s) => `

@@ -6,13 +6,10 @@
     <meta name="description" content="ClearPHYSICS — professional A/L Physics tuition by PHM Pathirana. Notes, past papers, live classes and recordings for the 2027 & 2028 A/L batches.">
     <title>ClearPHYSICS | Master the Universe — A/L Physics Tuition</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%2334d399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='4' fill='url(%23g)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='6' fill='none' stroke='url(%23g)' stroke-width='2' transform='rotate(30 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='6' fill='none' stroke='url(%23g)' stroke-width='2' transform='rotate(90 16 16)'/%3E%3C/svg%3E">
-    <!-- Professional Fonts: Sora (display) & Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Google Identity Services (Sign in with Google) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- External Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -22,7 +19,7 @@
         <div class="progress-bar-fill" id="progress-bar-fill"></div>
     </div>
 
-    <!-- Ambient Background: aurora blobs, faint grid, particle canvas -->
+    <!-- Ambient Background -->
     <div class="graphic-shape shape-1" aria-hidden="true"></div>
     <div class="graphic-shape shape-2" aria-hidden="true"></div>
     <div class="graphic-shape shape-3" aria-hidden="true"></div>
@@ -59,49 +56,96 @@
             <li>
                 <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle dark or light mode">🌙</button>
             </li>
+            <li>
+                <button type="button" class="btn nav-cta" id="nav-cta-btn">Log In Now</button>
+            </li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
-        <div class="hero-orbit" aria-hidden="true">
-            <span class="orbit-ring ring-1"></span>
-            <span class="orbit-ring ring-2"></span>
-            <span class="orbit-dot dot-1"></span>
-            <span class="orbit-dot dot-2"></span>
-        </div>
-        <div class="float-chip chip-1" aria-hidden="true">E = mc²</div>
-        <div class="float-chip chip-2" aria-hidden="true">F = ma</div>
-        <div class="float-chip chip-3" aria-hidden="true">λ</div>
-        <div class="float-chip chip-4" aria-hidden="true">∫ F · dt = Δp</div>
+        <div class="hero-copy">
+            <div class="hero-eyebrow">A/L Physics Tuition · by PHM Pathirana</div>
+            <h1>Master the Laws of the <span class="grad">Universe</span></h1>
+            <p>Unlock your potential with modern physics concepts. From simple mechanics to advanced theory, we make complex ideas clear, engaging, and easy to understand. Start your A/L journey with us.</p>
+            <div class="hero-ctas">
+                <button type="button" class="btn" id="book-session-btn">Log In Now</button>
+                <button type="button" class="btn btn-ghost" data-open-about>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                    Watch Our Story
+                </button>
+            </div>
 
-        <div class="hero-eyebrow">A/L Physics Tuition · by PHM Pathirana</div>
-        <h1>Master the Laws of the Universe</h1>
-        <p>Unlock your potential with modern physics concepts. From simple mechanics to <span>advanced theory</span>, we make complex concepts clear, engaging, and easy to understand. Start your A/L journey with us!</p>
-        <div class="hero-ctas">
-            <button type="button" class="btn" id="book-session-btn">Log In Now</button>
-            <button type="button" class="btn btn-ghost" data-open-about>
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                Watch Our Story
-            </button>
+            <div class="hero-trust marketing-content" data-reveal>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>2027 &amp; 2028 Batches</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Notes &amp; Past Papers</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    <span>Class Recordings</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span>WhatsApp Support</span>
+                </div>
+            </div>
         </div>
 
-        <div class="hero-trust marketing-content" data-reveal>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span>2027 &amp; 2028 Batches</span>
+        <!-- Hero visual: dashboard mock preview -->
+        <div class="hero-visual" aria-hidden="true">
+            <div class="hv-float hv-f1">
+                <span class="hv-float-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/></svg>
+                </span>
+                <div><b>Batch 2028</b><span>Enrolled</span></div>
             </div>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                <span>Notes &amp; Past Papers</span>
+            <div class="hv-card">
+                <div class="hv-head">
+                    <div class="hv-head-l">
+                        <svg class="hv-head-ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                        Study Dashboard
+                    </div>
+                    <span class="hv-live">This week</span>
+                </div>
+                <div class="hv-progress">
+                    <div class="hv-progress-top"><b>Waves &amp; Oscillations</b><span>72%</span></div>
+                    <div class="hv-track"><div class="hv-bar"></div></div>
+                </div>
+                <div class="hv-lessons">
+                    <div class="hv-lesson is-live">
+                        <span class="hv-ic">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="14" height="14" rx="2"/><polygon points="22 7 16 12 22 17 22 7"/></svg>
+                        </span>
+                        <div><b>Live Class — Superposition</b><span class="hv-sub">Sat · 8:00 PM</span></div>
+                    </div>
+                    <div class="hv-lesson is-video">
+                        <span class="hv-ic">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </span>
+                        <div><b>Recording — Standing Waves</b><span class="hv-sub">48 min · video</span></div>
+                    </div>
+                    <div class="hv-lesson is-doc">
+                        <span class="hv-ic">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        </span>
+                        <div><b>Notes — Unit &amp; Measurement</b><span class="hv-sub">PDF · 14 pages</span></div>
+                    </div>
+                </div>
+                <div class="hv-cta-row">
+                    <span class="hv-btn hv-btn-primary">Open My Dashboard</span>
+                    <span class="hv-btn hv-btn-ghost">Browse Months</span>
+                </div>
             </div>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                <span>Class Recordings</span>
-            </div>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                <span>WhatsApp Support</span>
+            <div class="hv-float hv-f2">
+                <span class="hv-float-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </span>
+                <div><b>Top in Physics</b><span>Exam-ready method</span></div>
             </div>
         </div>
     </section>
@@ -152,13 +196,17 @@
         </div>
         <div class="course-tiles-grid" id="course-tiles-grid">
             <div class="course-select-tile" data-batch="2027">
-                <div class="tile-icon" aria-hidden="true">📘</div>
+                <div class="tile-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
                 <h3>2027 Papers</h3>
                 <p>For students sitting the 2027 A/L examination.</p>
                 <span class="tile-cta">Sign in to access →</span>
             </div>
             <div class="course-select-tile" data-batch="2028">
-                <div class="tile-icon" aria-hidden="true">📙</div>
+                <div class="tile-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
                 <h3>2028 Papers</h3>
                 <p>For students sitting the 2028 A/L examination.</p>
                 <span class="tile-cta">Sign in to access →</span>
@@ -172,7 +220,9 @@
             <button class="modal-close" id="modal-close-btn" title="Close">&times;</button>
 
             <div id="modal-pre-login">
-                <div class="modal-icon" aria-hidden="true">🔬</div>
+                <div class="modal-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
                 <h2>Sign in to Book</h2>
                 <p>Sign in with Google to schedule your physics session. We'll use your account to confirm your booking details.</p>
                 <div class="google-signin-slot" id="google-signin-slot"></div>
@@ -232,7 +282,9 @@
             </div>
 
             <div id="modal-done" style="display:none;">
-                <div class="modal-icon success" aria-hidden="true">✓</div>
+                <div class="modal-icon success" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
                 <h2>You're All Set</h2>
                 <p id="modal-done-text">Your profile is saved. Head to your batch dashboard to access notes and recordings.</p>
                 <a href="#academics-section" class="btn" id="proceed-academics-btn" style="width:100%; text-align:center;">Go to My Academics</a>
@@ -265,7 +317,7 @@
                         <div class="lms-profile-batch" id="sidebar-batch">—</div>
                     </div>
                 </div>
-                <nav class="lms-nav">
+                <nav class="lms-nav" aria-label="Student dashboard">
                     <a href="#" class="lms-nav-item active" data-lms-nav="dashboard">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
                         Dashboard
@@ -356,7 +408,9 @@
                     <!-- Locked state: payment slip upload -->
                     <div id="month-locked-panel" style="display:none;">
                         <div class="locked-card">
-                            <div class="locked-icon" aria-hidden="true">🔒</div>
+                            <div class="locked-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            </div>
                             <p id="locked-status-text">This month isn't unlocked yet. Upload your payment slip below and your teacher will review it — once accepted, you'll have permanent access.</p>
                             <form id="slip-upload-form" class="slip-form">
                                 <label for="slip-file-input">Payment Slip (image or PDF)</label>
@@ -397,7 +451,7 @@
         </div>
     </div>
 
-    <!-- Contact Mode: get in touch directly -->
+    <!-- Contact Mode -->
     <section class="academics-section" id="contact-section" style="display:none;">
         <div class="academics-header">
             <h2>Get in Touch</h2>
@@ -486,12 +540,10 @@
             <p>From first principles to exam-day confidence — a clear, structured path from mechanics to modern physics.</p>
         </div>
 
-        <!-- Glass Tiles with Physics Images -->
         <section class="tiles-container">
-            <!-- Tile 1 -->
             <div class="glass-tile" data-reveal>
                 <div class="tile-image">
-                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&auto=format&fit=crop" alt="Physics Formulas and Chalkboard">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&auto=format&fit=crop" alt="Physics Formulas and Chalkboard" loading="lazy">
                 </div>
                 <div class="tile-content">
                     <div class="tile-tag">Foundation</div>
@@ -501,10 +553,9 @@
                 </div>
             </div>
 
-            <!-- Tile 2 -->
             <div class="glass-tile" data-reveal>
                 <div class="tile-image">
-                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=600&auto=format&fit=crop" alt="Science Experiment Equipment">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=600&auto=format&fit=crop" alt="Science Experiment Equipment" loading="lazy">
                 </div>
                 <div class="tile-content">
                     <div class="tile-tag">Exams</div>
@@ -514,10 +565,9 @@
                 </div>
             </div>
 
-            <!-- Tile 3 -->
             <div class="glass-tile" data-reveal>
                 <div class="tile-image">
-                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=600&auto=format&fit=crop" alt="Student Studying">
+                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=600&auto=format&fit=crop" alt="Student Studying" loading="lazy">
                 </div>
                 <div class="tile-content">
                     <div class="tile-tag">Mentoring</div>
@@ -565,7 +615,6 @@
         </div>
     </footer>
 
-    <!-- External JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

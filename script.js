@@ -90,6 +90,7 @@ async function callApi(action, payload, attempt) {
 // =========================================================
 const modalOverlay = document.getElementById('booking-modal');
 const bookBtn = document.getElementById('book-session-btn');
+const navCtaBtn = document.getElementById('nav-cta-btn');
 const closeBtn = document.getElementById('modal-close-btn');
 const preLogin = document.getElementById('modal-pre-login');
 const postLogin = document.getElementById('modal-post-login');
@@ -214,6 +215,12 @@ bookBtn.addEventListener('click', () => {
     regClearAllBtn.style.display = 'none';
     openModal();
 });
+if (navCtaBtn) navCtaBtn.addEventListener('click', (e) => { e.preventDefault(); bookBtn.click(); });
+
+function setLoginButtonText(text) {
+    if (bookBtn) bookBtn.textContent = text;
+    if (navCtaBtn) navCtaBtn.textContent = text;
+}
 closeBtn.addEventListener('click', closeModal);
 modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
@@ -487,7 +494,7 @@ confirmClearYesBtn.addEventListener('click', async () => {
     navSignoutLink.style.display = 'none';
     studentStatus.style.display = 'none';
     academicsSection.style.display = 'none';
-    bookBtn.textContent = 'Log In Now';
+    setLoginButtonText('Log In Now');
     currentProfile = null;
     currentIdToken = null;
     isEditMode = false;
@@ -519,6 +526,7 @@ function unlockAcademics(profile) {
     hideModeSections();
     body.classList.add('student-mode');
     selectedBatch = null;
+    setLoginButtonText('Go to My Dashboard');
 
     navAcademicsLink.style.display = 'inline-block';
     navEditDetailsLink.style.display = 'inline-block';
@@ -555,7 +563,7 @@ navSignoutLink.addEventListener('click', (e) => {
     navSignoutLink.style.display = 'none';
     studentStatus.style.display = 'none';
     academicsSection.style.display = 'none';
-    bookBtn.textContent = 'Log In Now';
+    setLoginButtonText('Log In Now');
     currentProfile = null;
     currentIdToken = null;
     if (typeof google !== 'undefined' && google.accounts) google.accounts.id.disableAutoSelect();
@@ -589,10 +597,15 @@ async function renderMonths(courseId) {
     monthsGrid.innerHTML = monthsCache.map((m) => `
         <a class="academics-card month-card" href="#" data-month-id="${m.id}">
             <div class="month-card-top">
-                <span class="card-title">${m.name}</span>
+                <span class="month-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </span>
+                <div class="month-card-titles">
+                    <span class="card-title">${m.name}</span>
+                    ${m.price ? `<span class="card-meta">Rs. ${m.price} · per month</span>` : ''}
+                </div>
                 <span class="month-card-arrow" aria-hidden="true">→</span>
             </div>
-            ${m.price ? `<span class="card-meta">Rs. ${m.price}</span>` : ''}
             ${m.description ? `<p class="card-desc">${m.description}</p>` : ''}
         </a>
     `).join('');
@@ -683,7 +696,9 @@ function contentCardHtml(type, item) {
             <span class="card-type-badge">${badges[type]}</span>
             <span class="card-title">${item.title}</span>
             ${item.meta ? `<span class="card-meta">${item.meta}</span>` : (type === 'live' ? '<span class="card-meta">Check the scheduled time with your teacher</span>' : '')}
-            <span class="content-card-action">${labels[type]}</span>
+            <span class="content-card-action">${labels[type]}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </span>
         </a>
     `;
 }
