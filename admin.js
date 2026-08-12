@@ -15,16 +15,38 @@ themeToggle.addEventListener('click', () => {
 
 let adminIdToken = null;
 
-async function callApi(action, payload) {
+// Google's free-tier Web App occasionally returns a slow/garbled
+// response under normal load (a known quirk, not a bug in this code) —
+// so a failed attempt is retried a couple of times with a short pause
+// before actually surfacing an error to the admin.
+function wait_(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+
+async function callApi(action, payload, attempt) {
+    attempt = attempt || 1;
     if (!API_URL || API_URL.indexOf('PASTE_YOUR') === 0) {
         throw new Error('Backend not connected yet (set API_URL in admin.js).');
     }
-    const resp = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action, payload: payload || {} })
-    });
-    const data = await resp.json();
+
+    let resp;
+    try {
+        resp = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, payload: payload || {} })
+        });
+    } catch (networkErr) {
+        if (attempt < 3) { await wait_(500 * attempt); return callApi(action, payload, attempt + 1); }
+        throw new Error('Could not reach the server. Please check your connection and try again.');
+    }
+
+    let data;
+    try {
+        data = await resp.json();
+    } catch (parseErr) {
+        if (attempt < 3) { await wait_(500 * attempt); return callApi(action, payload, attempt + 1); }
+        throw new Error('The server is temporarily busy. Please try again in a moment.');
+    }
+
     if (!data.ok) throw new Error(data.error || 'Something went wrong.');
     return data.data;
 }
